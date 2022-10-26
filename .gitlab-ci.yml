@@ -16,7 +16,7 @@ build-job:
 
 test-job:
   stage: test
-  image: mcr.microsoft.com/dotnet/sdk:6.0-focal
+  image: openjdk:8-jdk-alpine
   tags:
     - saas-linux-small-amd64
   script:
