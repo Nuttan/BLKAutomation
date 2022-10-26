@@ -1,8 +1,12 @@
 stages:
+  - install
   - build
   - test
   - deploy
-
+install-job:
+  stage: install
+  script:
+  - dotnet restore BLKSupportPortalDemo/BLKSupportPortalDemo.sln
 build-job:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:6.0-focal
