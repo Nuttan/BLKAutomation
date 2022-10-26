@@ -1,12 +1,8 @@
 stages:
-  - install
   - build
   - test
   - deploy
-install-job:
-  stage: install
-  script:
-  - dotnet restore BLKSupportPortalDemo/BLKSupportPortalDemo.sln
+
 build-job:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:6.0-focal
@@ -14,6 +10,7 @@ build-job:
     - saas-linux-small-amd64
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
+    - dotnet restore BLKSupportPortalDemo/BLKSupportPortalDemo.sln
     - dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.sln --configuration Release --no-restore
 
 test-job1:
