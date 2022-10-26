@@ -16,6 +16,9 @@ build-job:
 
 test-job:
   stage: test
+  image: mcr.microsoft.com/dotnet/sdk:6.0-focal
+  tags:
+    - saas-linux-small-amd64
   script:
     - echo "This job tests something"
     - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-restore --verbosity normal
