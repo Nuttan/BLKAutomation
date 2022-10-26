@@ -10,7 +10,7 @@ build-job:
     - saas-linux-small-amd64
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-    - dotnet build --configuration Release --no-restore
+    - dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.sln --configuration Release --no-restore
 
 test-job1:
   stage: test
