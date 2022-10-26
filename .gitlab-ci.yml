@@ -12,7 +12,7 @@ build-job:
     - echo "Hello, $GITLAB_USER_LOGIN!"
     - dotnet restore BLKSupportPortalDemo/BLKSupportPortalDemo.sln
     - dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.sln --configuration Release --no-restore
-    - dotnet test --no-restore --verbosity normal
+    - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-restore --verbosity normal
 
 
 test-job2:
