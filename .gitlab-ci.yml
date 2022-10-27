@@ -16,7 +16,7 @@ build-job:
 
 test-job1:
   stage: test
-  image: nazar89/dotnet-core-java
+  image: selenium/standalone-chrome:dev
   tags:
     - BLKTestFramworkRunner
   script:
