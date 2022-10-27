@@ -21,7 +21,6 @@ test-job:
     - saas-linux-small-amd64
   script:
     - echo "This job tests something"
-    - java -jar BLKSupportPortalDemo/selenium-server-4.5.0.jar standalone
     - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
   
 deploy-prod:
