@@ -7,7 +7,7 @@ build-job:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:6.0-focal
   tags:
-    - windows-1809
+    - saas-linux-medium-amd64
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
     - dotnet restore BLKSupportPortalDemo/BLKSupportPortalDemo.sln
@@ -18,7 +18,7 @@ test-job1:
   stage: test
   image: selenium/standalone-chrome:dev
   tags:
-    - windows-1809
+    - saas-linux-medium-amd64
   script:
     - echo "This job tests something"
     - java -jar BLKSupportPortalDemo/selenium-server-4.5.0.jar standalone
