@@ -41,7 +41,7 @@ namespace BLKAutoFramework.Base
             chromeOption.AddArguments("disable-infobars");
            // chromeOption.AddArguments("-headless");
             chromeOption.AddArguments("window-size=1920,1080");
-            _parallelConfig.Driver = new RemoteWebDriver(new Uri("http://selenium__standalone-chrome:4444/wd/hub/"), chromeOption.ToCapabilities());
+            _parallelConfig.Driver = new RemoteWebDriver(new Uri("http://docker:4444/wd/hub/"), chromeOption.ToCapabilities());
 
            //InternetExplorerOptions options = new InternetExplorerOptions();
            //options.AddAdditionalCapability("ignoreProtectedModeSettings", true);
