@@ -16,11 +16,12 @@ build-job:
 
 test-job:
   stage: test
-  image: selenium/standalone-chrome:dev
+  image: mcr.microsoft.com/dotnet/sdk:6.0-focal
   tags:
     - saas-linux-small-amd64
   script:
     - echo "This job tests something"
+    - java -jar BLKSupportPortalDemo/selenium-server-4.5.0.jar standalone
     - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
   
 deploy-prod:
