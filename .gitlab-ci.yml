@@ -16,7 +16,7 @@ build-job:
 
 test-job:
   stage: test
-  image: markhobson/maven-chrome:jdk-11
+  image: selenium/standalone-chrome:dev
   tags:
     - saas-linux-small-amd64
   script:
