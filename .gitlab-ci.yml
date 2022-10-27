@@ -17,7 +17,7 @@ build-job:
 test-job1:
   stage: test
   services:
-    - selenium/standalone-chrome
+    - markhobson/maven-chrome:jdk-11
   image: mcr.microsoft.com/dotnet/sdk:6.0-focal
   tags:
     - saas-linux-small-amd64
