@@ -21,6 +21,10 @@ test-job1:
     - saas-linux-small-amd64
   script:
     - echo "This job tests something"
+    - sudo apt install software-properties-common
+    - sudo add-apt-repository ppa:linuxuprising/java
+    - sudo apt update
+    - sudo apt install oracle-java11-installer
     - java -jar BLKSupportPortalDemo/selenium-server-4.5.0.jar standalone
     - sleep 20
     - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
