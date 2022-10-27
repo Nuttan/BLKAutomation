@@ -1,3 +1,5 @@
+
+image: markhobson/maven-chrome:jdk-11
 stages:
   - build
   - test
@@ -16,7 +18,7 @@ build-job:
 
 test-job1:
   stage: test
-  image: selenium/standalone-chrome:dev
+  image: mcr.microsoft.com/dotnet/sdk:6.0-focal
   tags:
     - saas-linux-medium-amd64
   script:
