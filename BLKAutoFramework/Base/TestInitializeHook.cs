@@ -36,7 +36,13 @@ namespace BLKAutoFramework.Base
         private void OpenBrowser(BrowserType browserType )
         {
             var chromeOption = new ChromeOptions();
+            chromeOption.AddArguments(new List<string>() {
+                "--silent-launch",
+                "--no-startup-window",
+                "no-sandbox",
+                "headless",});
             chromeOption.AddArguments("disable-infobars");
+            chromeOption.AddArguments("window-size=1920,1080");
             new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
             _parallelConfig.Driver=new ChromeDriver(chromeOption);
 
