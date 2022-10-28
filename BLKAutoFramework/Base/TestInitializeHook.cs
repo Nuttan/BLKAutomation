@@ -1,9 +1,12 @@
 using BLKAutoFramework.Helpers;
 using BLKAutoFramework.Utility;
 using BoDi;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 using OpenQA.Selenium.Remote;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace BLKAutoFramework.Base
 {
@@ -33,19 +36,10 @@ namespace BLKAutoFramework.Base
         private void OpenBrowser(BrowserType browserType )
         {
             var chromeOption = new ChromeOptions();
-            chromeOption.AddArguments(new List<string>() {
-                "--silent-launch",
-                "--no-startup-window",
-                "no-sandbox",
-                "headless",});
-            chromeOption.AddArguments("disable-infobars"); 
-            chromeOption.AddArguments("window-size=1920,1080");
-            _parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), chromeOption.ToCapabilities());
+            chromeOption.AddArguments("disable-infobars");
+            new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
+            _parallelConfig.Driver=new ChromeDriver(chromeOption);
 
-           //InternetExplorerOptions options = new InternetExplorerOptions();
-           //options.AddAdditionalCapability("ignoreProtectedModeSettings", true);
-           //options.AddAdditionalCapability("EnsureCleanSession", true);
-           //_parallelConfig.Driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), options.ToCapabilities(), TimeSpan.FromSeconds(300));
         }
     }
 }

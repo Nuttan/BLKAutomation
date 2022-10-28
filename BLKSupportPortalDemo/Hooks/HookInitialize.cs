@@ -116,7 +116,7 @@ namespace BLKSupportPortalDemo.Hooks
         public static void TestInitalize()
         {
             //Initialize Extent report before test starts
-            var htmlReporter = new ExtentHtmlReporter(@"D:\OwnC#Programmes\BLKSupportPortalDemo\Output\ExtentReport\SeleniumWithSpecflow\ExtentReport.html");
+            var htmlReporter = new ExtentHtmlReporter(@"D:\NuttanFinal\blktestframework\BLKSupportPortalDemo\Output\ExtentReport\SeleniumWithSpecflow\ExtentReport.html");
             htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
             //Attach report to reporter
             _extent = new ExtentReports();

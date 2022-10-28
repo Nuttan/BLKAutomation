@@ -1,13 +1,16 @@
 ﻿using AventStack.ExtentReports;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Safari;
 
 namespace BLKAutoFramework.Base
 {
     public class ParallelConfig
     {
 
-        public RemoteWebDriver? Driver { get; set; }
+        public ChromeDriver? Driver { get; set; }
 
         public BasePage? CurrentPage { get; set; }
 

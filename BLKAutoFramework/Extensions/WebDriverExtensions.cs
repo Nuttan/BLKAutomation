@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System.Diagnostics;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
 namespace BLKAutoFramework.Extensions
@@ -38,15 +39,14 @@ namespace BLKAutoFramework.Extensions
                 }
             }
         }
-        public static IWebElement? FindById(this RemoteWebDriver remoteWebDriver, string element)
+        public static IWebElement? FindById(this ChromeDriver chromeDriver, string element)
         {
-            WebDriverWait w = new WebDriverWait(remoteWebDriver, TimeSpan.FromSeconds(10));
+            WebDriverWait w = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             try
             {
                 if (w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id(element))).IsElementPresent())
                 {
                     return w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id(element)));
-                    //return remoteWebDriver.FindElementById(element);
                 }
             }
             catch (Exception e)
@@ -55,15 +55,31 @@ namespace BLKAutoFramework.Extensions
             }
             return null;
         }
-        public static IWebElement? FindByXpath(this RemoteWebDriver remoteWebDriver, string element)
+
+        public static IWebElement? FindElementByClassName(this ChromeDriver chromeDriver, string element)
         {
-            WebDriverWait w = new WebDriverWait(remoteWebDriver, TimeSpan.FromSeconds(15));
+            WebDriverWait w = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
+            try
+            {
+                if (w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.ClassName(element))).IsElementPresent())
+                {
+                    return w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.ClassName(element)));
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ElementNotVisibleException($"Element not found : {element}" + e.Message);
+            }
+            return null;
+        }
+        public static IWebElement? FindByXpath(this ChromeDriver chromeDriver, string element)
+        {
+            WebDriverWait w = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(15));
             try
             {
                 if (w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(element))).IsElementPresent())
                 {
                     return w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(element)));
-                    //return remoteWebDriver.FindElementByXPath(element);
                 }
             }
             catch (Exception e)
@@ -72,13 +88,13 @@ namespace BLKAutoFramework.Extensions
             }
             return null;
         }
-        public static IWebElement? FindByCss(this RemoteWebDriver remoteWebDriver, string element)
+        public static IWebElement? FindByCss(this ChromeDriver chromeDriver, string element)
         {
             try
             {
-                if (remoteWebDriver.FindElementByCssSelector(element).IsElementPresent())
+                if ((chromeDriver.FindElement(By.CssSelector(element)).IsElementPresent()))
                 {
-                    return remoteWebDriver.FindElementByCssSelector(element);
+                    return chromeDriver.FindElement(By.CssSelector(element));
                 }
             }
             catch (Exception e)
@@ -87,13 +103,13 @@ namespace BLKAutoFramework.Extensions
             }
             return null;
         }
-        public static IWebElement? FindByLinkText(this RemoteWebDriver remoteWebDriver, string element)
+        public static IWebElement? FindByLinkText(this ChromeDriver chromeDriver, string element)
         {
             try
             {
-                if (remoteWebDriver.FindElementByLinkText(element).IsElementPresent())
+                if (chromeDriver.FindElement(By.LinkText(element)).IsElementPresent())
                 {
-                    return remoteWebDriver.FindElementByLinkText(element);
+                    return chromeDriver.FindElement(By.LinkText(element));
                 }
             }
             catch (Exception e)
