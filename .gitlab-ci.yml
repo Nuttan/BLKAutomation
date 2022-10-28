@@ -23,7 +23,7 @@ test-job1:
     - saas-linux-medium-amd64
   script:
     - echo "This job tests something"
-    - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-restore --verbosity normal
+    - dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
 
   
 deploy-prod:
