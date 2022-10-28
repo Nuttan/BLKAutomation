@@ -18,7 +18,7 @@ build-job:
 
 test-job1:
   stage: test
-  image: devpassis/seleniumdotnetcore
+  image: mcr.microsoft.com/dotnet/sdk:6.0-focal
   tags:
     - saas-linux-medium-amd64
   script:
