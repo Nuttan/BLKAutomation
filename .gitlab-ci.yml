@@ -18,7 +18,7 @@ build-job:
 
 test-job1:
   stage: test
-  image: selenium/standalone-chrome:dev
+  image: devpassis/seleniumdotnetcore
   tags:
     - saas-linux-medium-amd64
   script:
