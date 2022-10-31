@@ -41,7 +41,8 @@ namespace BLKAutoFramework.Base
                 "--disable-dev-shm-usage",
                 "--headless",});
             //chromeOption.AddArguments("disable-infobars");
-            //chromeOption.AddArguments("window-size=1920,1080");
+            chromeOption.AddArguments("--window-size=1920,1080");
+            //chromeOption.AddArguments("--start-maximized");
             new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
             _parallelConfig.Driver=new ChromeDriver(chromeOption);
 
