@@ -39,4 +39,4 @@ jobs:
          chmod +x ./scripts/InstallChrome.sh
           ./scripts/InstallChrome.sh 
       - name: Test
-        run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-restore --verbosity normal
+        run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
