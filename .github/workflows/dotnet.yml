@@ -24,5 +24,9 @@ jobs:
       run: dotnet restore "BLKSupportPortalDemo/BLKSupportPortalDemo.csproj"
     - name: Build
       run: dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.csproj --configuration Release --no-restore
+    - name: Install Google Chrome # Using shell script to install Google Chrome
+      run: |
+       chmod +x ./scripts/InstallChrome.sh
+        ./scripts/InstallChrome.sh
     - name: Test
       run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln
