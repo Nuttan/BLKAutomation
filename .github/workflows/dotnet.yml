@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.csproj --configuration Release --no-restore
     - name: Test
-      run: dotnet test BLKAutomation/BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-build --verbosity normal
+      run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-build --verbosity normal
