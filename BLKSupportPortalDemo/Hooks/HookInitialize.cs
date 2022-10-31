@@ -145,32 +145,7 @@ namespace BLKSupportPortalDemo.Hooks
             var userName = Environment.UserName; // for getting user name
             try
             {
-                var allChromeSessions = Process.GetProcessesByName("chrome");
-                foreach (var chromeOpenProcess in allChromeSessions)
-                {
-                    try
-                    {
-                        chromeOpenProcess.Kill();
-                    }
-                    finally
-                    {
-                        chromeOpenProcess.WaitForExit();
-                    }
-                }
-                var downloadedMessageInfo = new DirectoryInfo(rootDrive + "Users\\" + userName + "\\AppData\\Local\\Google\\Chrome\\User Data");
-                try
-                {
-                    foreach (var file in downloadedMessageInfo.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                }
-                catch (FileNotFoundException e)
-                {
-                    if (e.Source != null)
-                        Console.WriteLine("IOException source: {0}", e.Source);
-                    throw;
-                }
+                
             }
             catch (IOException ex)
             {
