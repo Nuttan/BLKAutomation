@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build BLKSupportPortalDemo/BLKSupportPortalDemo.sln --configuration Release --no-restore
+      run: dotnet build BLKAutomation/BLKSupportPortalDemo/BLKSupportPortalDemo.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-build --verbosity normal
+      run: dotnet test BLKAutomation/BLKSupportPortalDemo/BLKSupportPortalDemo.sln --no-build --verbosity normal
