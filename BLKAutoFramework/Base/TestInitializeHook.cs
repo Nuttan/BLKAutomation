@@ -46,7 +46,7 @@ namespace BLKAutoFramework.Base
             chromeOption.AddArguments("--proxy-server='direct://'");
             chromeOption.AddArguments("window-size=1920,1080");
             new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-            _parallelConfig.Driver=new ChromeDriver(chromeOption);
+            _parallelConfig.Driver=new ChromeDriver();
 
         }
     }
