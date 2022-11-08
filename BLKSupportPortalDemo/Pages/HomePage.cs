@@ -11,30 +11,23 @@ namespace BLKSupportPortalDemo.Pages
         {
 
         }
-
         IWebElement? LnkLogin => _parallelConfig.Driver!.FindElementByClassName("btn-login");
-
         IWebElement? ProvisioningLink => _parallelConfig.Driver!.FindByXpath("//label[contains(text(),'Provisioning')]");
-
         IWebElement? HomeTxtlabel => _parallelConfig.Driver!.FindByXpath("//a[@data-testid='home']");
-
 
         internal void CheckIfLoginExist()
         {
             LnkLogin!.AssertElementPresent();
         }
-
         internal LoginPage ClickLogin()
         {
             LnkLogin!.Click();
             return new LoginPage(_parallelConfig);
         }
-
         internal string GetLoggedInUser()
         {
             return HomeTxtlabel!.Text;
         }
-
         public ProvisioningPge ClickProvisioning()
         {
             ProvisioningLink!.Click();

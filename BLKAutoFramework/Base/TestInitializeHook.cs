@@ -39,13 +39,14 @@ namespace BLKAutoFramework.Base
             chromeOption.AddArguments(new List<string>() {
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
-                "--headless",});
-            //chromeOption.AddArguments("disable-infobars");
+                "--remote-debugging-port=9222",
+                "--disable-extensions",
+                "--disable-gpu", 
+                "--headless",
+            });
             chromeOption.AddArguments("--window-size=1920,1080");
-            //chromeOption.AddArguments("--start-maximized");
             new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
             _parallelConfig.Driver=new ChromeDriver(chromeOption);
-
         }
     }
 }

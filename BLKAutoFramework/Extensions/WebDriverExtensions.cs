@@ -79,7 +79,7 @@ namespace BLKAutoFramework.Extensions
             {
                 if (w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(element))).IsElementPresent())
                 {
-                    return w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(element)));
+                    return w.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(element)));
                 }
             }
             catch (Exception e)
@@ -117,6 +117,27 @@ namespace BLKAutoFramework.Extensions
                 throw new ElementNotVisibleException($"Element not found : {element}" + e.Message);
             }
             return null;
+        }
+        public static SelectElement FindSelectElementWhenPopulated(this ChromeDriver chromeDriver, string locator)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(20));
+                return wait.Until<SelectElement>(drv =>
+                    {
+                        SelectElement element = new SelectElement(drv.FindElement(By.XPath(locator)));
+                        if (element.Options.Count >= 2)
+                        {
+                            return element;
+                        }
+                        return null;
+                    }
+                );
+            }
+            catch (Exception e)
+            {
+                throw new ElementNotSelectableException($"Element not found : {locator}" + e.Message);
+            }
         }
     }
 }

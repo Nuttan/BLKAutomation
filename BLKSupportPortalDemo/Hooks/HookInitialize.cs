@@ -54,7 +54,7 @@ namespace BLKSupportPortalDemo.Hooks
             {
                 var strDate = DateTime.Now.ToString("dd-MM-yyyy-(hh-mm-ss)");
                 var basePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()?.Location!).LocalPath);
-                var projectRootPath = basePath!.Split(new string[] { "bin" }, StringSplitOptions.None)[0];
+                var projectRootPath = basePath!.Split(new string[] { "BLKSupportPortalDemo" }, StringSplitOptions.None)[0];
                 var screenshotsPath = $"{projectRootPath}Output\\Screenshots\\{strDate}\\{_scenarioContext.StepContext.StepInfo.Text.Split(new string[] { "\"" }, StringSplitOptions.None)[0]}";
                 if (!System.IO.Directory.Exists(screenshotsPath))
                 {
@@ -75,15 +75,15 @@ namespace BLKSupportPortalDemo.Hooks
 
                 //Creating JIRA issueBug
                 var settings = new JiraRestClientSettings(){ EnableRequestTrace = true };
-                var jira = Jira.CreateRestClient("https://engnuttan.atlassian.net", username: _featuresConfiguration.JIRAUserName, password: _featuresConfiguration.JIRAUserAPIKey);
+                IssueType issuetyp = new IssueType("10018", "Bug",false);
+                var jira = Jira.CreateRestClient("https://engnuttan.atlassian.net",  _featuresConfiguration.JIRAUserName, _featuresConfiguration.JIRAUserAPIKey,null);
                 var issue1 = jira.CreateIssue(_featuresConfiguration.JIRAProjectKey);
-                issue1.Type = "Bug";
+                issue1.Type= issuetyp;
                 issue1.Summary = _scenarioContext.TestError.Message;
                 issue1.Description = _scenarioContext.TestError.Message + _scenarioContext.TestError.StackTrace;
                 issue1.SaveChanges();
 
                 //Upload attachment to JIRA issue
-
                 var issue = await jira.Issues.GetIssueAsync(issue1.Key.ToString());
                 if (issue != null)
                 {
@@ -91,7 +91,7 @@ namespace BLKSupportPortalDemo.Hooks
                     if (File.Exists(path))
                     {
                         var fileAsByteArray = File.ReadAllBytes(path);
-                        var attachment = new UploadAttachmentInfo("someFileName.png", fileAsByteArray);
+                        var attachment = new UploadAttachmentInfo(_scenarioContext.TestError.Message+".png", fileAsByteArray);
                         await issue.AddAttachmentAsync(new UploadAttachmentInfo[] { attachment });
                         Console.WriteLine("Uploading successful");
                     }
@@ -115,8 +115,10 @@ namespace BLKSupportPortalDemo.Hooks
         [BeforeTestRun]
         public static void TestInitalize()
         {
+            var basePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()?.Location!).LocalPath);
+            var projectRootPath = basePath!.Split(new string[] { "BLKSupportPortalDemo" }, StringSplitOptions.None)[0];
             //Initialize Extent report before test starts
-            var htmlReporter = new ExtentHtmlReporter(@"D:\NuttanFinal\blktestframework\BLKSupportPortalDemo\Output\ExtentReport\SeleniumWithSpecflow\ExtentReport.html");
+            var htmlReporter = new ExtentHtmlReporter($"{projectRootPath}Output\\ExtentReport\\SeleniumWithSpecflow\\ExtentReport.html");
             htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
             //Attach report to reporter
             _extent = new ExtentReports();
@@ -145,7 +147,32 @@ namespace BLKSupportPortalDemo.Hooks
             var userName = Environment.UserName; // for getting user name
             try
             {
-                
+                //var allChromeSessions = Process.GetProcessesByName("chrome");
+                //foreach (var chromeOpenProcess in allChromeSessions)
+                //{
+                //    try
+                //    {
+                //        chromeOpenProcess.Kill();
+                //    }
+                //    finally
+                //    {
+                //        chromeOpenProcess.WaitForExit();
+                //    }
+                //}
+                //var downloadedMessageInfo = new DirectoryInfo(rootDrive + "Users\\" + userName + "\\AppData\\Local\\Google\\Chrome\\User Data");
+                //try
+                //{
+                //    foreach (var file in downloadedMessageInfo.GetFiles())
+                //    {
+                //        file.Delete();
+                //    }
+                //}
+                //catch (FileNotFoundException e)
+                //{
+                //    if (e.Source != null)
+                //        Console.WriteLine("IOException source: {0}", e.Source);
+                //    throw;
+                //}
             }
             catch (IOException ex)
             {
