@@ -44,9 +44,9 @@ jobs:
          chmod +x ./scripts/InstallChrome.sh
           ./scripts/InstallChrome.sh
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
       - name: Install and update webdriver-manager
         run: |
           npm install -g webdriver-manager
