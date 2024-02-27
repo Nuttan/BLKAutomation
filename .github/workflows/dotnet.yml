@@ -42,7 +42,12 @@ jobs:
       - name: Install Google Chrome # Using shell script to install Google Chrome
         run: |
          chmod +x ./scripts/InstallChrome.sh
-          ./scripts/InstallChrome.sh 
+          ./scripts/InstallChrome.sh
+      - name: Install and update webdriver-manager
+        run: |
+          npm install -g webdriver-manager
+          webdriver-manager update
+        shell: bash
       - name: Test
         run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --logger "trx;LogFileName=test-results.trx" || true
         
