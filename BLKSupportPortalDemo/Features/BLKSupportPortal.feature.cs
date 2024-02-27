@@ -114,7 +114,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Password"});
                 table1.AddRow(new string[] {
                             "Nuttan.swain@hexagon.com",
-                            "RakutenP@ssw0rd123"});
+                            "HyundaiCreta@2024#"});
 #line 8
  testRunner.When("I enter UserName and Password", ((string)(null)), table1, "When ");
 #line hidden

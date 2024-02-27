@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using Atlassian.Jira;
-using BLKAutoFramework.Base;
 using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Gherkin.Model;
+using AventStack.ExtentReports.Reporter;
+using BLKAutoFramework.Base;
 using BLKAutoFramework.Utility;
 using BoDi;
 using OpenQA.Selenium;
@@ -62,7 +61,7 @@ namespace BLKSupportPortalDemo.Hooks
                 }
 
                 ((ITakesScreenshot)_parallelConfig.Driver!)
-                    .GetScreenshot().SaveAsFile(screenshotsPath + "Screenshot.png", ScreenshotImageFormat.Png);
+                    .GetScreenshot().SaveAsFile(screenshotsPath + "Screenshot.png");
 
                 var mediaEntity =
                     _parallelConfig.CaptureScreenshotAndReturnModel(_scenarioContext.ScenarioInfo.Title.Trim());
@@ -118,8 +117,8 @@ namespace BLKSupportPortalDemo.Hooks
             var basePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()?.Location!).LocalPath);
             var projectRootPath = basePath!.Split(new string[] { "BLKSupportPortalDemo" }, StringSplitOptions.None)[0];
             //Initialize Extent report before test starts
-            var htmlReporter = new ExtentHtmlReporter($"{projectRootPath}Output\\ExtentReport\\SeleniumWithSpecflow\\ExtentReport.html");
-            htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
+            var htmlReporter = new ExtentJsonFormatter($"{projectRootPath}Output\\ExtentReport\\SeleniumWithSpecflow\\ExtentReport.html");
+            //htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
             //Attach report to reporter
             _extent = new ExtentReports();
             _extent.AttachReporter(htmlReporter);

@@ -13,7 +13,7 @@ namespace BLKSupportPortalDemo.Pages
         }
         IWebElement? LnkLogin => _parallelConfig.Driver!.FindElementByClassName("btn-login");
         IWebElement? ProvisioningLink => _parallelConfig.Driver!.FindByXpath("//label[contains(text(),'Provisioning')]");
-        IWebElement? HomeTxtlabel => _parallelConfig.Driver!.FindByXpath("//a[@data-testid='home']");
+        IWebElement? HomeTxtlabel => _parallelConfig.Driver!.FindByXpath("//a[@data-testid='home']/label");
 
         internal void CheckIfLoginExist()
         {

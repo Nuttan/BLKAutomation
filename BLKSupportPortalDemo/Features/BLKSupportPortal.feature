@@ -7,7 +7,7 @@ Scenario: Login
 	When I click "login" link
 	When I enter UserName and Password
 	| UserName | Password |
-	| Nuttan.swain@hexagon.com    | RakutenP@ssw0rd123 |
+	| Nuttan.swain@hexagon.com    | HyundaiCreta@2024# |
 	Then I click "login" button
 	Then I should see the username with hello
 	Then I click "provisioning" link

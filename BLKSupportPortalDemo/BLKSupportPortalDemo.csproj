@@ -9,19 +9,19 @@
 
   <ItemGroup>
     <PackageReference Include="Atlassian.SDK" Version="13.0.0" />
-    <PackageReference Include="ExtentReports" Version="4.1.0" />
-    <PackageReference Include="Gherkin" Version="24.1.0" />
-    <PackageReference Include="JunitXml.TestLogger" Version="3.0.114" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="ExtentReports" Version="5.0.2" />
+    <PackageReference Include="Gherkin" Version="28.0.0" />
+    <PackageReference Include="JunitXml.TestLogger" Version="3.1.12" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="SpecFlow.Assist.Dynamic" Version="1.4.2" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="xunit" Version="2.7.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="FluentAssertions" Version="6.8.0" />
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
   </ItemGroup>
 
   <ItemGroup>

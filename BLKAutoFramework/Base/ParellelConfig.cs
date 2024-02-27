@@ -1,4 +1,5 @@
 ﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -14,10 +15,10 @@ namespace BLKAutoFramework.Base
 
         public BasePage? CurrentPage { get; set; }
 
-        public MediaEntityModelProvider CaptureScreenshotAndReturnModel(string Name)
+        public Media CaptureScreenshotAndReturnModel(string Name)
         {
             var screenshot = ((ITakesScreenshot)Driver!).GetScreenshot().AsBase64EncodedString;
-            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot,Name).Build();
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, Name).Build();
         }
 
     }

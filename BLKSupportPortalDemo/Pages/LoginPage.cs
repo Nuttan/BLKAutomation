@@ -11,7 +11,7 @@ namespace BLKSupportPortalDemo.Pages
         IWebElement? NextBtn => _parallelConfig.Driver!.FindByXpath("//input[@value='Next']");
         IWebElement? TxtPassword => _parallelConfig.Driver!.FindByXpath("//input[@name='passwd']");
         IWebElement? SigninBtn => _parallelConfig.Driver!.FindByXpath("//input[@value='Sign in']");
-        IWebElement? ConfirmBtn => _parallelConfig.Driver!.FindByXpath("//input[@value='Yes']");
+        IWebElement? ConfirmBtn => _parallelConfig.Driver!.FindByXpath("//input[@type='submit']");
 
         public void Login(string userName, string password)
         {
