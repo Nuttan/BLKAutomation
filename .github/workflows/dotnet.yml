@@ -43,15 +43,6 @@ jobs:
         run: |
          chmod +x ./scripts/InstallChrome.sh
           ./scripts/InstallChrome.sh
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - name: Install and update webdriver-manager
-        run: |
-          npm install -g webdriver-manager
-          webdriver-manager update
-        shell: bash
       - name: Test
         run: dotnet test BLKSupportPortalDemo/BLKSupportPortalDemo.sln --logger "trx;LogFileName=test-results.trx" || true
         
