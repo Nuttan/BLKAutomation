@@ -12,7 +12,8 @@ on:
 jobs:
   Build:
 
-    runs-on: naswaincustom
+    runs-on:
+      labels: naswaincustom
 
     steps:
     - uses: actions/checkout@v3
