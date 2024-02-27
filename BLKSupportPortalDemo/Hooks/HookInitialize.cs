@@ -17,7 +17,7 @@ namespace BLKSupportPortalDemo.Hooks
     public class HookInitialize : TestInitializeHook
     {
         private readonly IObjectContainer _objectContainer;
-        private IFeaturesConfiguration _featuresConfiguration;
+        private IFeaturesConfiguration? _featuresConfiguration;
         private readonly ParallelConfig _parallelConfig;
         private readonly FeatureContext _featureContext;
         private readonly ScenarioContext _scenarioContext;

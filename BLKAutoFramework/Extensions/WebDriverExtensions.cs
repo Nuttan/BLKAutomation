@@ -123,15 +123,16 @@ namespace BLKAutoFramework.Extensions
             try
             {
                 WebDriverWait wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(20));
-                return wait.Until<SelectElement>(drv =>
-                    {
-                        SelectElement element = new SelectElement(drv.FindElement(By.XPath(locator)));
-                        if (element.Options.Count >= 2)
-                        {
-                            return element;
-                        }
-                        return null;
-                    }
+                Func<IWebDriver, SelectElement> condition = drv =>
+                                    {
+                                        SelectElement element = new SelectElement(drv.FindElement(By.XPath(locator)));
+                                        if (element.Options.Count >= 2)
+                                        {
+                                            return element;
+                                        }
+                                        return null!;
+                                    };
+                return wait.Until<SelectElement>(condition
                 );
             }
             catch (Exception e)

@@ -11,7 +11,7 @@ namespace BLKAutoFramework.Base
     {
 
         private readonly ParallelConfig _parallelConfig;
-        private IFeaturesConfiguration _featuresConfiguration;
+        private IFeaturesConfiguration? _featuresConfiguration;
         private readonly IObjectContainer _objectContainer;
 
         public TestInitializeHook(ParallelConfig parallelConfig, IObjectContainer objectContainer)

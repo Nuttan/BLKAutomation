@@ -20,23 +20,23 @@ namespace BLKAutoFramework.Utility
         }
         public string ApplicationURL
         {
-            get => _configuration["BLKSupportPortal:ApplicationURL"];
+            get => _configuration["BLKSupportPortal:ApplicationURL"]!;
         }
         public string BrowserType
         {
-            get => _configuration["BLKSupportPortal:BrowserType"];
+            get => _configuration["BLKSupportPortal:BrowserType"]!;
         }
         public string JIRAUserName
         {
-            get => _configuration["BLKSupportPortal:JIRAUserName"];
+            get => _configuration["BLKSupportPortal:JIRAUserName"]!;
         }
         public string JIRAUserAPIKey
         {
-            get => _configuration["BLKSupportPortal:JIRAUserAPIKey"];
+            get => _configuration["BLKSupportPortal:JIRAUserAPIKey"]!;
         }
         public string JIRAProjectKey
         {
-            get => _configuration["BLKSupportPortal:JIRAProjectKey"];
+            get => _configuration["BLKSupportPortal:JIRAProjectKey"]!;
         }
     }
 }

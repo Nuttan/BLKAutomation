@@ -11,7 +11,7 @@ namespace BLKSupportPortalDemo
         private readonly IFeaturesConfiguration _featuresConfiguration;
 
         //Context injection
-        private readonly ParallelConfig _parallelConfig;
+        private new readonly ParallelConfig _parallelConfig;
         public BlkSupportPortalProvisioningStepDefinitions(ParallelConfig parallelConfig,IFeaturesConfiguration featuresConfiguration) : base(parallelConfig)
         {
             _featuresConfiguration = featuresConfiguration;
