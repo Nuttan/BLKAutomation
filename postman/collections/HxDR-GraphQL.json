@@ -1,0 +1,528 @@
+{
+	"info": {
+		"_postman_id": "6fc7157c-b74e-4e23-8066-aaefa993d49a",
+		"name": "HxDR-GraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "1721597-6fc7157c-b74e-4e23-8066-aaefa993d49a"
+	},
+	"item": [
+		{
+			"name": "Generate Token new url",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0540518-9fe6-4041-a1cd-09b12fe1e427",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = responseBody;\r",
+							"    tests[\"Project ID Created\"] = jsonData !== null;\r",
+							"    pm.globals.set(\"tokenId\", jsonData);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2713e915-a591-4039-b507-3a11cf70251a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "389f7206-883b-4696-9fe1-2b05033da81c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"followRedirects": true,
+				"strictSSL": false,
+				"followOriginalHttpMethod": false,
+				"disableUrlEncoding": false
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"testuser2.isle.geo@leica-geosystems.com\",\r\n  \"password\": \"Abc123456789#?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://tests-auth-v2-uat.dev.geo-isle.com/access",
+					"protocol": "https",
+					"host": [
+						"tests-auth-v2-uat",
+						"dev",
+						"geo-isle",
+						"com"
+					],
+					"path": [
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lists Of Projects Initially",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "656ae7aa-a0fe-4150-96f9-5462683abc5c",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Total Number of Projects\"] = jsonData.data.projects.total !== 0;\r",
+							"    pm.globals.set(\"initialNumberOfProjects\", jsonData.data.projects.total);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fbceaf65-d11c-4a61-a131-0fbfbbd1ded8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "877f97c8-3b00-4671-996f-eb756f595060",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ListProjectsQuery($params: GetProjectsInput) {\r\n                    projects(params: $params) {\r\n                        __typename\r\n                        ... on ProjectResultOutput {\r\n                            total\r\n                            contents {\r\n                            ... ProjectItem\r\n                            }\r\n                        }\r\n                        ... on BaseProjectErrorInterface {\r\n                            message\r\n                        }\r\n                        resultTypeName: __typename\r\n                    }\r\n                }\r\n\r\n                fragment ProjectItem on ProjectOutput {\r\n                      id\r\n                      name\r\n                      createdAt\r\n                      modifiedAt\r\n                      modifiedBy {\r\n                        firstName\r\n                        lastName\r\n                      }\r\n                      rootFolder {\r\n                        id\r\n                      }\r\n                      thumbnailPath\r\n                      totalAssets\r\n                      projectMembers {\r\n                        contents {\r\n                          id\r\n                          userDetails {\r\n                            firstName\r\n                            lastName\r\n                            id\r\n                          }\r\n                          projectRole\r\n                        }\r\n                      }\r\n                    }",
+						"variables": "{\r\n  \"params\": \r\n  {\r\n    \"orderBy\": \"CREATED_AT_DESC\"\r\n  }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Members V2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1d40807-34f4-4202-b44e-4f01d865016a",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Total Number of Account Members\"] = jsonData.data.accountMembers.total !== 0;\r",
+							"    pm.globals.set(\"totalMembersCount\", jsonData.data.accountMembers.total);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dab9df43-622f-4930-b003-7c50f6e16854",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d5eaa92f-2585-4fbb-b7d4-349aa6ff2465",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query AccountMembers($orderBy: AccountMembersOrderEnum) {\r\n  accountMembers(orderBy: $orderBy) {\r\n    ... on AccountMembersResultOutput {\r\n      total\r\n      members {\r\n        id\r\n        firstName\r\n        lastName\r\n        email\r\n        accountRole\r\n        profilePictureUrl\r\n      }\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n  \"orderBy\": \"ACCOUNT_ROLE_DESC\"\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Project V2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbfd28ff-6ee4-4aaf-836a-a9437871e5f0",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Project ID Created\"] = jsonData.data.createProjectV2.id !== null;\r",
+							"    pm.globals.set(\"projectId\", jsonData.data.createProjectV2.id);\r",
+							"    pm.globals.set(\"parentFolderId\", jsonData.data.createProjectV2.rootFolder.id);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2a67fb09-fb64-423c-b474-9e6a235e9a20",
+						"exec": [
+							"pm.globals.set(\"randomNumber\", _.random(1,1000));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "4a5f3fc1-22fc-44cb-a866-a83828000eec",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateProjectMutation($params: CreateProjectInput!) {\r\n                    createProjectV2(params: $params) {\r\n                        __typename\r\n                        ... on ProjectOutput {\r\n                            id\r\n                            rootFolder {\r\n                                id\r\n                            }\r\n                        }\r\n                        ... on BaseProjectErrorInterface {\r\n                            message\r\n                        }\r\n                        resultTypeName: __typename\r\n                    }\r\n                }",
+						"variables": "{\r\n  \"params\": \r\n  {\r\n    \"name\": \"NS-MS-Test Proj-{{randomNumber}}\"\r\n  }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Folder within Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b4f07b75-8ecd-4426-a254-2b21fd225e51",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Folder ID Created\"] = jsonData.data.createFolderV2.id !== null;\r",
+							"    pm.globals.set(\"folderId\", jsonData.data.createFolderV2.id);\r",
+							"    pm.globals.set(\"folderName\", jsonData.data.createFolderV2.name);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dcb3b3db-b90c-4cc0-942e-6f1bd0669fb2",
+						"exec": [
+							"pm.globals.set(\"randomNumber\", _.random(1,1000));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "dab943cc-8a73-4db4-9bf0-a0853ad65f47",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateFolderMutation($params: CreateFolderInput!) {\r\n                  createFolderV2(params: $params) {\r\n                    __typename\r\n                    ... on FolderOutput {\r\n                        id\r\n                        name\r\n                        modifiedAt\r\n                    }\r\n                    ... on BaseFolderErrorInterface {\r\n                        message\r\n                    }\r\n                    resultTypeName: __typename\r\n                  }\r\n                }",
+						"variables": "{\r\n  \"params\": \r\n  {\r\n    \"projectId\": \"{{projectId}}\",\r\n    \"parentFolderId\": \"{{parentFolderId}}\",\r\n    \"name\": \"Test-Folder-{{randomNumber}}\",\r\n    \"description\": \"This is a Test Folder\"\r\n  }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFolderDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85ee0bc4-26e7-4b0a-b0b1-d6bd2002d36a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7a1dde0d-16e3-4208-8079-25d52993a570",
+						"exec": [
+							"pm.globals.set(\"randomNumber\", _.random(1,1000));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "a05335a4-c0ac-45fc-9d22-e868a495b359",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetFolderDetails($id: ID!) {\r\n  folder(folderId: $id) {\r\n    ... on FolderOutput {\r\n      id\r\n      name\r\n      createdAt\r\n      modifiedAt\r\n      createdBy {\r\n        firstName\r\n        lastName\r\n      }\r\n      modifiedBy {\r\n        firstName\r\n        lastName\r\n      }\r\n      parentFolder {\r\n        id\r\n        isRootFolder\r\n        name\r\n      }\r\n      resultTypeName: __typename\r\n    }\r\n    ... on BaseFolderErrorInterface {\r\n      message\r\n      __typename\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n    \"id\":\"{{folderId}}\"\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an Asset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0aeaf0fa-0b5f-48fe-88c0-dcdd9af4d314",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Asset is Created\"] = jsonData.data.createAssetV2.id !== null;\r",
+							"    pm.globals.set(\"assetId\", jsonData.data.createAssetV2.id);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f1f28f21-cdbf-4299-9028-dc30a9d5b914",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "41f30e30-1153-4f26-8eba-15462e5d3488",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateAssetMutation($params: CreateAssetInputV3!) {\r\n                              createAssetV3 (params: $params) {\r\n                                __typename\r\n                                ... on GroupedAssetOutput  {\r\n                                    ...CreatedAsset\r\n                                }\r\n                                ... on BaseAssetErrorInterface {\r\n                                    message\r\n                                }\r\n                                resultTypeName: __typename\r\n                              }\r\n                            }\r\n                            fragment CreatedAsset on GroupedAssetOutput {\r\n                               id\r\n                        }",
+						"variables": "{\r\n  \"params\": \r\n  {\r\n    \"assetType\": \"ISLE_FILE_UPLOAD\",\r\n    \"folderId\": \"{{folderId}}\",\r\n    \"name\": \"test-asset11\"\r\n  }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rename an Asset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "474f61a8-f104-49d0-9e24-2d29b02a88b7",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"if (responseCode.code === 200){\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Asset is Renamed\"] = jsonData.data.updateAssetV2.id !== null && jsonData.data.updateAssetV2.name == \"assetrenamed\";\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8ed4fdb3-71fc-4366-88bc-36e5381f5544",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "393a044e-c9d0-4eba-9273-7cc2fc0dd124",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{tokenId}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation RenameFileMutation($params: UpdateAssetInput!) {\r\n                            updateAssetV2(params: $params) {\r\n                                __typename\r\n                                ... on GroupedAssetOutput {\r\n                                    ...RenamedFile\r\n                                }\r\n                                ... on BaseAssetErrorInterface {\r\n                                    message\r\n                                }\r\n                                resultTypeName: __typename\r\n                            }\r\n                        }\r\n\r\n                        fragment RenamedFile on GroupedAssetOutput  {\r\n                            id\r\n                            name\r\n                            modifiedAt\r\n                            assetType\r\n                        }",
+						"variables": "{\r\n  \"params\": \r\n  {\r\n    \"groupedAssetId\": \"{{assetId}}\",\r\n    \"name\": \"assetrenamed\"\r\n  }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://uat-hxdr.com/graphql",
+					"protocol": "https",
+					"host": [
+						"uat-hxdr",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
