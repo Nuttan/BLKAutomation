@@ -54,3 +54,14 @@ jobs:
          path: "**/test-results.trx"                            
          reporter: dotnet-trx
          fail-on-error: true
+
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "${{ github.workspace }}/postman/collections/HxDR-GraphQL.json" -e "1721597-41cca810-eded-45b2-b29a-998e920913a2"
+          # Lint your API using Postman CLI
+          postman api lint b9f96efb-d327-4f14-b8ee-a901c6eb86a5
